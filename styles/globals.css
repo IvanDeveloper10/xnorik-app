@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+@config '../tailwind.config.js';
+
+.font-po {
+  font-family: var(--font-poppins);
+}
