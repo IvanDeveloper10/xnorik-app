@@ -31,7 +31,9 @@ export default function RootLayout({
 }) {
   return (
     <html suppressHydrationWarning lang='en'>
-      <head />
+      <head>
+        <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'></link>
+      </head>
       <body
         className={clsx(
           '',
