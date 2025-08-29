@@ -1,16 +1,27 @@
 'use client'
 
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from '@heroui/navbar';
 import { Button } from '@heroui/button';
 import { Image } from '@heroui/image';
 import Link from 'next/link';
-
+import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
+import { app } from '@/utils/firebase';
 
 
 export default function NavBar() {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const auth = getAuth(app);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => unsubscribe();
+  }, [auth]);
 
   return (
     <Fragment>
@@ -37,18 +48,20 @@ export default function NavBar() {
           </NavbarItem>
         </NavbarContent>
 
-        <NavbarContent justify='end' className='hidden sm:flex'>
-          <NavbarItem>
-            <Link href={'/Register'}>
-              <Button color='primary' variant='ghost' radius='none'>Registrarse</Button>
-            </Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Link href='/Login'>
-              <Button color='primary' variant='solid' radius='none'>Iniciar Sesion</Button>
-            </Link>
-          </NavbarItem>
-        </NavbarContent>
+        {!user && (
+          <NavbarContent justify='end' className='hidden sm:flex'>
+            <NavbarItem>
+              <Link href={'/Register'}>
+                <Button color='primary' variant='ghost' radius='lg'>Registrarse</Button>
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link href={'/Login'}>
+                <Button color='primary' variant='solid' radius='lg'>Iniciar Sesion</Button>
+              </Link>
+            </NavbarItem>
+          </NavbarContent>
+        )}
 
         <NavbarMenu>
           

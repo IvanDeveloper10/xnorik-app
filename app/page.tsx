@@ -13,8 +13,8 @@ export default function HomePage(): JSX.Element {
         <main className='mt-10 flex flex-col gap-10 text-po w-2/4'>
           <h1 className='font-extrabold text-4xl text-po'>SIGA EL ESTADO DE SU <i className='bg-blue-500 px-5 rounded-xl text-white'>COMPUTADORA</i></h1>
           <label className='flex'>
-            <Input label={'Ingrese El Ticket'} color='primary' radius='none' />
-            <Button color='primary' radius='none' className='h-full flex justify-center items-center gap-1'><i className='fi fi-rr-search flex justify-center items-ceter'></i>Seguir</Button>
+            <Input label={'Ingrese El Ticket'} color='primary' radius='none' className='rounded-l-xl w-96' />
+            <Button color='primary' radius='none' className='h-full flex justify-center items-center gap-1 rounded-r-xl'><i className='fi fi-rr-search flex justify-center items-ceter'></i>Seguir</Button>
           </label>
         </main>
         <div>
