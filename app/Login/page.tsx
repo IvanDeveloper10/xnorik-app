@@ -26,7 +26,7 @@ export default function Login(): JSX.Element {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      router.push('/HomeUser');
+      router.push('/HomeTech');
     } catch (err: any) {
       setError('Credenciales Incorrectas O Usuario No Registrado');
     } finally {

@@ -5,14 +5,19 @@ import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, Navba
 import { Button } from '@heroui/button';
 import { Image } from '@heroui/image';
 import Link from 'next/link';
-import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, User, signOut } from 'firebase/auth';
+import { Popover, PopoverTrigger, PopoverContent } from '@heroui/popover';
 import { app } from '@/utils/firebase';
+import { addToast } from '@heroui/toast';
+import { Avatar } from '@heroui/avatar';
+
 
 
 export default function NavBar() {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [photoURL, setPhotoURL] = useState('');
   const auth = getAuth(app);
 
   useEffect(() => {
@@ -23,20 +28,49 @@ export default function NavBar() {
     return () => unsubscribe();
   }, [auth]);
 
+  const HandleSignOut = () => {
+    signOut(auth).then(() => {
+      addToast({
+        title: 'Se Ha Cerrado Sesión Correctamente',
+        color: 'secondary',
+        variant: 'bordered',
+        radius: 'sm',
+        hideIcon: true,
+        timeout: 4000
+      })
+    }).catch((error) => {
+      addToast({
+        title: 'Ha Ocurrido Un Error Al Tratar De Cerrar Sesion',
+        color: 'danger',
+        variant: 'bordered',
+        radius: 'sm',
+        hideIcon: true, 
+        timeout: 4000
+      })
+    })
+  }
+
+  useEffect(() => {
+    if (user) {
+      const photoURL = user.photoURL ?? '';
+      setPhotoURL(photoURL);
+    }
+  }, []);
+
   return (
     <Fragment>
-      <Navbar isBlurred isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen} className='w-full flex px-10 bg-slate-50 text-po'>
-        <NavbarContent className='sm:hidden' justify='start'>
+      <Navbar isBlurred={true} shouldHideOnScroll isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen} className='w-full flex px-10 bg-slate-50 text-po'>
+        <NavbarContent className='hidden max-[746]:flex' justify='start'>
           <NavbarMenuToggle aria-label={isMenuOpen ? 'Close menu' : 'Open menu'} />
         </NavbarContent>
 
-        <NavbarContent className='sm:hidden pr-3' justify='center'>
+        <NavbarContent className='hidden max-[746]:flex'>
           <NavbarBrand>
             <Image src='/xnorik-logo.png' width={100} />
           </NavbarBrand>
         </NavbarContent>
 
-        <NavbarContent className='hidden sm:flex gap-7' justify='center'>
+        <NavbarContent className='hidden min-[746]:flex' justify='center'>
           <NavbarBrand>
             <Image src='/xnorik-logo.png' width={100} />
           </NavbarBrand>
@@ -46,6 +80,11 @@ export default function NavBar() {
           <NavbarItem>
             <Link href='/About' className='flex justify-center items-center gap-1'><i className='fi fi-rr-info flex justify-center items-center'></i>Acerca</Link>
           </NavbarItem>
+          {user && (
+            <NavbarItem>
+              <Link href={'/HomeTech'} className='flex justify-center items-center gap-1'><i className='fi fi-rr-browser flex justify-center items-center'></i> Dashboard</Link>
+            </NavbarItem>
+          )}
         </NavbarContent>
 
         {!user && (
@@ -63,8 +102,29 @@ export default function NavBar() {
           </NavbarContent>
         )}
 
-        <NavbarMenu>
-          
+        {user && (
+          <Popover backdrop='blur'>
+            <PopoverTrigger>
+              <Avatar src={photoURL} />
+            </PopoverTrigger>
+            <PopoverContent className='p-4'>
+              <Button className='' color='danger' variant='shadow' onPress={HandleSignOut}>Cerrar Sesion</Button>
+            </PopoverContent>
+          </Popover>
+        )}
+      
+        <NavbarMenu className='text-po gap-2'>
+          <NavbarMenuItem>
+              <Link href='/' className='flex justify-start items-center gap-1'><i className='fi fi-rr-home flex justify-center items-center'></i>Inicio</Link>
+          </NavbarMenuItem>
+          <NavbarMenuItem>
+              <Link href='/About' className='flex justify-start items-center gap-1'><i className='fi fi-rr-info flex justify-center items-center'></i>Acerca</Link>
+          </NavbarMenuItem>
+          <NavbarMenuItem>
+            {user && (
+                <Link href={'/HomeUser'} className='flex justify-start items-center gap-1'><i className='fi fi-rr-browser flex justify-center items-center'></i> Dashboard</Link>
+            )}
+          </NavbarMenuItem>
         </NavbarMenu>
       </Navbar>
     </Fragment>
