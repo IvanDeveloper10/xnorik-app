@@ -468,7 +468,11 @@ export default function HomeTech(): JSX.Element | null {
     <Fragment>
       <section className='container mx-auto p-4'>
         <main>
-          <h1 className='text-5xl text-center my-10 font-extrabold text-po'>BIENVENIDO AL CENTRO DE CONTROL</h1>
+          <h1 className='text-5xl text-center my-10 font-extrabold text-po max-sm:text-2xl'><span className='bg-red-500 text-white p-2 rounded-xl max-md:bg-transparent max-md:text-black max-md:p-0 max-md:rounded-none'>BIENVENIDO</span> AL CENTRO DE <span className='bg-purple-500 text-white p-2 rounded-xl max-md:bg-transparent max-md:text-black max-md:p-0 max-md:rounded-none'>CONTROL</span></h1>
+          <div className='flex justify-around items-center'>
+            <Image src={'/image-board.svg'} width={500} />
+            <Image src={'/image-presentation.svg'} width={500} />
+          </div>
         </main>
         <Divider />
 

@@ -153,7 +153,8 @@ export default function HomePage(): JSX.Element {
     <Fragment>
       <section className='h-screen rounded-xl w-full flex justify-center p-10 max-md:p-5'>
         <main className='mt-10 max-md:mt-0 flex flex-col justify-center max-md:justify-start max-md:items-center gap-10 text-po w-2/4 max-md:w-full'>
-          <h1 className='font-extrabold text-4xl text-po max-md:text-center max-md:text-5xl'>SIGA EL ESTADO DE SU <i className='bg-blue-500 px-5 rounded-xl text-white'>COMPUTADORA</i></h1>
+          <h1 className='font-extrabold text-4xl text-po max-md:text-center max-md:text-5xl max-sm:text-2xl'>SIGA EL ESTADO DE SU <i className='bg-blue-500 px-5 rounded-xl text-white max-md:hidden'>COMPUTADORA</i></h1>
+          <h1 className='min-md:hidden bg-purple-500 font-extrabold px-5 rounded-xl text-white text-6xl max-sm:text-3xl'>COMPUTADORA</h1>
           <div className='min-md:hidden'>
             <Image src={'/image-track.svg'} alt={'Image Track'} width={400} height={400}></Image>
           </div>
@@ -162,7 +163,7 @@ export default function HomePage(): JSX.Element {
             <Button color='primary' onPress={handleSearchService} isLoading={searchLoading} radius='none' className='h-full flex justify-center items-center gap-1 rounded-r-xl'><i className='fi fi-rr-search flex justify-center items-ceter'></i>{searchLoading ? <Spinner size='sm' /> : 'Buscar'}</Button>
           </label>
         </main>
-        <div className='max-md:hidden'>
+        <div className='max-md:hidden flex justify-center items-center'>
           <Image src={'/image-track.svg'} alt={'Image Track'} width={400} height={400}></Image>
         </div>
         {searchedService && (
@@ -318,22 +319,23 @@ export default function HomePage(): JSX.Element {
         )}
       </section>
       <section className='w-full h-screen bg-black rounded-4xl flex justify-around items-center'>
-        <div className='w-2/4 flex justify-center items-center flex-col gap-10 px-5 max-md:w-full'>
-          <h1 className='text-white text-po font-bold text-5xl text-center'>¿QUE ES XNORIK?</h1>
+        <div className='w-2/4 flex justify-center items-center flex-col gap-10 px-5 max-md:px-10 max-md:w-full max-md:justify-center max-md:items-center max-md:gap-0'>
+          <h1 className='text-white text-po font-bold text-5xl text-center max-sm:text-2xl'>¿QUE ES XNORIK?</h1>
           <Image src={'/image-call.svg'} className='flex min-md:hidden' width={500} height={400} alt={'Image Call'} />
-          <p className='w-full text-white text-po font-light'>Xnorik, es un servicio web que prioriza la comunicación entre un técnico de reparación y su respectivo cliente, brindando confianza y seguridad.</p>
+          <p className='w-full text-white text-po font-light max-sm:text-sm'>Xnorik, es un servicio web que prioriza la comunicación entre un técnico de reparación y su respectivo cliente, brindando confianza y seguridad.</p>
         </div>
         <div className='2/4 max-md:hidden'>
           <Image src={'/image-call.svg'} width={500} height={400} alt={'Image Call'}/>
         </div>
       </section>
       <section className='w-full h-screen flex justify-around items-center'>
-        <div className='w-2/4 flex justify-center items-center'>
+        <div className='w-2/4 flex justify-center items-center max-md:hidden'>
           <Image src={'/image-function.svg'} alt={'Image Function'} width={500} height={500} />
         </div>
-        <div className='w-2/4 flex justify-center items-center flex-col gap-10 px-5'>
-          <h1 className='text-po font-bold text-5xl text-center'>¿COMO FUNCIONA?</h1>
-          <p className='w-full text-po font-light'>El técnico, al registrar una cuenta e iniciar sesion, tiene una sección reservada para la creación de servicios de mantenimiento y reparación, cuando "Agrega Un Nuevo Servicio" debe responder datos y además se generará un codigo o ticket que debe ser enviado al cliente para que pueda ingresarlo, y así buscar el estado de su computadora.</p>
+        <div className='w-2/4 flex justify-center items-center flex-col gap-10 px-5 max-md:px-10 max-md:w-full max-md:justify-center max-md:items-center max-md:gap-0'>
+          <h1 className='text-po font-bold text-5xl text-center max-sm:text-2xl'>¿COMO FUNCIONA?</h1>
+          <Image src={'/image-function.svg'} alt={'Image Function'} className='flex min-md:hidden' width={500} height={500} />
+          <p className='w-full text-po font-light max-sm:text-sm'>El técnico, al registrar una cuenta e iniciar sesion, tiene una sección reservada para la creación de servicios de mantenimiento y reparación, cuando "Agrega Un Nuevo Servicio" debe responder datos y además se generará un codigo o ticket que debe ser enviado al cliente para que pueda ingresarlo, y así buscar el estado de su computadora.</p>
         </div>
       </section>
     </Fragment>
