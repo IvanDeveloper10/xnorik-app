@@ -1022,6 +1022,7 @@ export default function HomeTech(): JSX.Element | null {
                 <div>
                   <h2 className='font-bold text-center mb-4'>FECHA DE CREACIÓN</h2>
                   <p className='text-center'>{formatTimestamp(selectedService.createdAt)}</p>
+                  <p className='text-center'>{`Código de seguimiento: ${selectedService.trackingCode}`}</p> 
                 </div>
               </div>
             )}
