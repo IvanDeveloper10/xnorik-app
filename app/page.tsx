@@ -12,7 +12,6 @@ import { addToast } from '@heroui/toast';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 import { Divider } from '@heroui/divider';
 import { app } from '@/utils/firebase';
-import Link from 'next/link';
 
 const db = getFirestore(app);
 
@@ -153,14 +152,14 @@ export default function HomePage(): JSX.Element {
     <Fragment>
       <section className='h-screen rounded-xl w-full flex justify-center p-10 max-md:p-5'>
         <main className='mt-10 max-md:mt-0 flex flex-col justify-center max-md:justify-start max-md:items-center gap-10 text-po w-2/4 max-md:w-full'>
-          <h1 className='font-extrabold text-4xl text-po max-md:text-center max-md:text-5xl max-sm:text-2xl'>SIGA EL ESTADO DE SU <i className='bg-blue-500 px-5 rounded-xl text-white max-md:hidden'>COMPUTADORA</i></h1>
-          <h1 className='min-md:hidden bg-purple-500 font-extrabold px-5 rounded-xl text-white text-6xl max-sm:text-3xl'>COMPUTADORA</h1>
+          <h1 className='font-extrabold text-4xl text-po max-md:text-center max-md:text-5xl max-sm:text-xl'>SIGA EL ESTADO DE SU <i className='bg-blue-500 px-5 rounded-xl text-white max-md:hidden'>COMPUTADORA</i></h1>
+          <h1 className='min-md:hidden bg-purple-500 font-extrabold px-5 rounded-xl text-white text-6xl max-sm:text-2xl'>COMPUTADORA</h1>
           <div className='min-md:hidden'>
             <Image src={'/image-track.svg'} alt={'Image Track'} width={400} height={400}></Image>
           </div>
           <label className='flex max-md:w-full'>
-            <Input label={'Ingrese El Ticket'} color='primary' radius='none' className='rounded-l-xl w-96 max-md:w-full' value={searchCode} onChange={(e) => setSearchCode(e.target.value.toUpperCase())} />
-            <Button color='primary' onPress={handleSearchService} isLoading={searchLoading} radius='none' className='h-full flex justify-center items-center gap-1 rounded-r-xl'><i className='fi fi-rr-search flex justify-center items-ceter'></i>{searchLoading ? <Spinner size='sm' /> : 'Buscar'}</Button>
+            <Input label={'Ingrese El Ticket'} color='primary' radius='none' className='rounded-l-xl w-96 max-md:w-full max-sm:h-11' value={searchCode} onChange={(e) => setSearchCode(e.target.value.toUpperCase())} />
+            <Button color='primary' onPress={handleSearchService} isLoading={searchLoading} radius='none' className='h-full flex justify-center items-center gap-1 rounded-r-xl max-sm:h-11'><i className='fi fi-rr-search flex justify-center items-ceter'></i>{searchLoading ? <Spinner size='sm' /> : 'Buscar'}</Button>
           </label>
         </main>
         <div className='max-md:hidden flex justify-center items-center'>

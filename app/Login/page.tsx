@@ -40,14 +40,14 @@ export default function Login(): JSX.Element {
         <main className='w-96 flex flex-col gap-5'>
           <h1 className='font-bold text-center text-xl'>ACCEDE A TU CUENTA</h1>
           <label>
-            <Input label='Correo Electronico' color='default' variant='underlined' type='email' value={email} onChange={(e) => setEmail(e.target.value)}></Input>
+            <Input label='Email' translate='no' color='default' variant='underlined' type='email' value={email} onChange={(e) => setEmail(e.target.value)}></Input>
           </label>
           <label>
-            <Input label='Contraseña' color='default' variant='underlined' type='password' value={password} onChange={(e) => setPassword(e.target.value)}></Input>
+            <Input label='Password' translate='no' color='default' variant='underlined' type='password' value={password} onChange={(e) => setPassword(e.target.value)}></Input>
           </label>
           {error && <p className='text-red-500 text-sm text-center text-po'>{error}</p>}
           <div>
-            <Button color='secondary' radius='none' variant='shadow' className='w-full' onPress={handleLogin} isLoading={loading}>INICIAR SESION</Button>
+            <Button color='secondary' translate='no' radius='none' variant='shadow' className='w-full' onPress={handleLogin} isLoading={loading}>LOGIN</Button>
           </div>
           <div>
             <p className='text-sm text-center'>¿No Tienes Una Cuenta Registrada? <Link href='/Register' className='text-blue-500'>Registrate Aquí</Link></p>

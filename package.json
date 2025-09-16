@@ -9,6 +9,7 @@
     "lint": "eslint --fix"
   },
   "dependencies": {
+    "@formatjs/intl-localematcher": "^0.6.1",
     "@heroui/button": "2.2.24",
     "@heroui/code": "2.2.18",
     "@heroui/input": "2.4.25",
@@ -26,17 +27,23 @@
     "clsx": "2.1.1",
     "firebase": "^12.1.0",
     "framer-motion": "11.18.2",
+    "i18next": "^25.5.2",
+    "i18next-resources-to-backend": "^1.2.1",
     "intl-messageformat": "10.7.16",
+    "negotiator": "^1.0.0",
     "next": "15.3.1",
+    "next-i18next": "^15.4.2",
     "next-themes": "0.4.6",
     "react": "18.3.1",
     "react-dom": "18.3.1",
+    "react-i18next": "^15.7.3",
     "uuid": "^12.0.0"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "15.3.4",
     "@react-types/shared": "3.30.0",
     "@tailwindcss/postcss": "4.1.11",
+    "@types/negotiator": "^0.6.4",
     "@types/node": "20.5.7",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
