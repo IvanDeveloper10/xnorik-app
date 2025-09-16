@@ -16,3 +16,13 @@ Styling: Tailwind CSS with Tailwind Variants for component variants
 Language: TypeScript for type safety
 Animations: Framer Motion for smooth transitions and interactions
 Theme Managemnt: next-themes for dark/light mode support
+
+
+# work Order Tracking
+Detailed work progress monitoring with milestone tracking
+
+Transparent status updates (received, in-progress, awaiting parts, completed)
+
+Service history and documentation archive
+
+Digital signature capture for work approval
