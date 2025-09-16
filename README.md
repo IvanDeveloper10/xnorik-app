@@ -2,6 +2,8 @@
 
 Xnorik is a comprehensive web-based communication platform specifically designed for the repair and technical service industry. It facilitates seamless interaction between service technicians and their clients throughout the entire repair process, from initial assessment to job completion.
 
+<img width="1900" height="895" alt="Captura de pantalla 2025-09-16 184218" src="https://github.com/user-attachments/assets/9828b69d-69ae-4ceb-9d1b-d27d029a5562" />
+
 <img width="1898" height="1017" alt="Captura de pantalla 2025-09-16 181842" src="https://github.com/user-attachments/assets/4f8ea9e7-ec9e-43b0-8fce-0077af90ba27" />
 
 
