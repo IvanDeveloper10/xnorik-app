@@ -158,8 +158,8 @@ export default function HomePage(): JSX.Element {
             <Image src={'/image-track.svg'} alt={'Image Track'} width={400} height={400}></Image>
           </div>
           <label className='flex max-md:w-full'>
-            <Input label={'Ingrese El Ticket'} color='primary' radius='none' className='rounded-l-xl w-96 max-md:w-full max-sm:h-11' value={searchCode} onChange={(e) => setSearchCode(e.target.value.toUpperCase())} />
-            <Button color='primary' onPress={handleSearchService} isLoading={searchLoading} radius='none' className='h-full flex justify-center items-center gap-1 rounded-r-xl max-sm:h-11'><i className='fi fi-rr-search flex justify-center items-ceter'></i>{searchLoading ? <Spinner size='sm' /> : 'Buscar'}</Button>
+            <Input label={'Enter the ticket or tracking code'} color='primary' radius='none' className='rounded-l-xl w-96 max-md:w-full max-sm:h-11' value={searchCode} onChange={(e) => setSearchCode(e.target.value.toUpperCase())} translate='no' />
+            <Button color='primary' onPress={handleSearchService} isLoading={searchLoading} radius='none' className='h-full flex justify-center items-center gap-1 rounded-r-xl max-sm:h-11' translate='no'><i className='fi fi-rr-search flex justify-center items-ceter'></i>{searchLoading ? <Spinner size='sm' /> : 'Search'}</Button>
           </label>
         </main>
         <div className='max-md:hidden flex justify-center items-center'>

@@ -544,105 +544,114 @@ export default function HomeTech(): JSX.Element | null {
         </div>
       </section>
 
-      {/* Modal para agregar servicio */}
-      <Modal isOpen={isOpen} onOpenChange={(open: boolean) => setIsOpen(open)} size='full' scrollBehavior='inside'>
+      <Modal isOpen={isOpen} onOpenChange={(open: boolean) => setIsOpen(open)} size='full' scrollBehavior='inside' translate='no'>
         <ModalContent>
           <ModalHeader className='flex justify-center items-center'>
-            <h1 className='text-center text-4xl font-extrabold text-po'>INFORMACIÓN DEL MANTENIMIENTO</h1>
+            <h1 className='text-center text-4xl font-extrabold text-po'>MAINTENANCE INFORMATION</h1>
           </ModalHeader>
           <ModalBody>
             <section className='w-full flex flex-col md:flex-row justify-between text-po gap-4'>
               <div className='w-full md:w-1/2 px-2 md:px-4 space-y-4'>
-                <h2 className='text-po text-center font-bold'>Información Personal Del Cliente</h2>
+                <h2 className='text-po text-center font-bold'>Customer Personal Information</h2>
                 <Input
-                  label='Nombres Y Apellidos Del Cliente'
+                  label='Customer Full Name'
                   color='secondary'
                   variant='underlined'
                   type='text'
                   value={formData.nombreCliente}
                   onChange={(e) => handleInputChange('nombreCliente', e.target.value)}
+                  translate='no'
                 />
                 <Input
-                  label='Dirección De Residencia'
+                  label='Home Address'
                   color='secondary'
                   variant='underlined'
                   type='text'
                   value={formData.direccionCliente}
                   onChange={(e) => handleInputChange('direccionCliente', e.target.value)}
+                  translate='no'
                 />
                 <Input
-                  label='Número De Cedula'
+                  label='ID Number'
                   color='secondary'
                   variant='underlined'
                   value={formData.cedulaCliente}
                   onChange={(e) => handleInputChange('cedulaCliente', e.target.value)}
+                  translate='no'
                 />
                 <Input
-                  label='Número De Celular'
+                  label='Phone Number'
                   color='secondary'
                   variant='underlined'
                   value={formData.celularCliente}
                   onChange={(e) => handleInputChange('celularCliente', e.target.value)}
+                  translate='no'
                 />
                 <Input
-                  label='Email O Correo Electronico'
+                  label='Email Address'
                   color='secondary'
                   variant='underlined'
                   type='email'
                   value={formData.emailCliente}
                   onChange={(e) => handleInputChange('emailCliente', e.target.value)}
+                  translate='no'
                 />
               </div>
               <div className='w-full md:w-1/2 px-2 md:px-4 space-y-4'>
-                <h2 className='text-center font-bold'>Información Personal Del Técnico</h2>
+                <h2 className='text-center font-bold'>Technician Personal Information</h2>
                 <Input
-                  label='Nombres Y Apellidos Del Técnico'
+                  label='Technician Full Name'
                   color='secondary'
                   variant='underlined'
                   value={formData.nombreTecnico}
                   onChange={(e) => handleInputChange('nombreTecnico', e.target.value)}
+                  translate='no'
                 />
                 <Input
-                  label='Dirección De Residencia'
+                  label='Home Address'
                   color='secondary'
                   variant='underlined'
                   type='text'
                   value={formData.direccionTecnico}
                   onChange={(e) => handleInputChange('direccionTecnico', e.target.value)}
+                  translate='no'
                 />
                 <Input
-                  label='Número De Cedula'
+                  label='ID Number'
                   color='secondary'
                   variant='underlined'
                   value={formData.cedulaTecnico}
                   onChange={(e) => handleInputChange('cedulaTecnico', e.target.value)}
+                  translate='no'
                 />
                 <Input
-                  label='Número De Celular'
+                  label='Phone Number'
                   color='secondary'
                   variant='underlined'
                   value={formData.celularTecnico}
                   onChange={(e) => handleInputChange('celularTecnico', e.target.value)}
+                  translate='no'
                 />
                 <Input
-                  label='Email O Correo Electronico'
+                  label='Email Address'
                   color='secondary'
                   variant='underlined'
                   type='email'
                   value={formData.emailTecnico}
                   onChange={(e) => handleInputChange('emailTecnico', e.target.value)}
+                  translate='no'
                 />
               </div>
             </section>
 
             <div className='my-5'>
-              <h1 className='text-center font-bold text-po'>Información De La Computadora</h1>
+              <h1 className='text-center font-bold text-po'>Computer Information</h1>
             </div>
 
             <div className='w-full grid grid-cols-1 md:grid-cols-2 gap-4'>
               <Card className='w-full p-4'>
                 <CardHeader>
-                  <h2 className='text-po'>Tipo De Computadora:</h2>
+                  <h2 className='text-po'>Type of Computer:</h2>
                 </CardHeader>
                 <CardBody>
                   <RadioGroup
@@ -650,16 +659,16 @@ export default function HomeTech(): JSX.Element | null {
                     value={formData.tipoComputadora}
                     onValueChange={(val) => handleInputChange('tipoComputadora', val)}
                   >
-                    <Radio value='Computadora De Escritorio'>Computadora De Escritorio</Radio>
-                    <Radio value='Computadora Portátil'>Computadora Portatil</Radio>
-                    <Radio value='Computadora Todo En Uno'>Computadora Todo En Uno</Radio>
+                    <Radio value='Desktop Computer'>Desktop Computer</Radio>
+                    <Radio value='Laptop'>Laptop</Radio>
+                    <Radio value='All-in-One Computer'>All-in-One Computer</Radio>
                   </RadioGroup>
                 </CardBody>
               </Card>
 
               <Card className='w-full p-4'>
                 <CardHeader>
-                  <h2 className='text-po'>¿Que Tipo De Mantenimiento?</h2>
+                  <h2 className='text-po'>What Type of Maintenance?</h2>
                 </CardHeader>
                 <CardBody>
                   <RadioGroup
@@ -667,16 +676,16 @@ export default function HomeTech(): JSX.Element | null {
                     value={formData.tipoMantenimiento}
                     onValueChange={(val) => handleInputChange('tipoMantenimiento', val)}
                   >
-                    <Radio value='Preventivo'>Preventivo</Radio>
-                    <Radio value='Correctivo'>Correctivo</Radio>
-                    <Radio value='Predictivo'>Predictivo</Radio>
+                    <Radio value='Preventive'>Preventive</Radio>
+                    <Radio value='Corrective'>Corrective</Radio>
+                    <Radio value='Predictive'>Predictive</Radio>
                   </RadioGroup>
                 </CardBody>
               </Card>
 
               <Card className='w-full p-4'>
                 <CardHeader>
-                  <h2 className='text-po'>¿Teclado En Buen Estado?</h2>
+                  <h2 className='text-po'>Is the Keyboard in Good Condition?</h2>
                 </CardHeader>
                 <CardBody>
                   <RadioGroup
@@ -684,16 +693,16 @@ export default function HomeTech(): JSX.Element | null {
                     value={formData.estadoTeclado}
                     onValueChange={(val) => handleInputChange('estadoTeclado', val)}
                   >
-                    <Radio value='Si'>Si</Radio>
+                    <Radio value='Yes'>Yes</Radio>
                     <Radio value='No'>No</Radio>
-                    <Radio value='No Tiene'>No tiene</Radio>
+                    <Radio value='Does Not Have'>Does Not Have</Radio>
                   </RadioGroup>
                 </CardBody>
               </Card>
 
               <Card className='w-full p-4'>
                 <CardHeader>
-                  <h2 className='text-po'>¿Pantalla O Monitor En Buen Estado?</h2>
+                  <h2 className='text-po'>Is the Screen/Monitor in Good Condition?</h2>
                 </CardHeader>
                 <CardBody>
                   <RadioGroup
@@ -701,16 +710,16 @@ export default function HomeTech(): JSX.Element | null {
                     value={formData.estadoPantalla}
                     onValueChange={(val) => handleInputChange('estadoPantalla', val)}
                   >
-                    <Radio value='Si'>Si</Radio>
+                    <Radio value='Yes'>Yes</Radio>
                     <Radio value='No'>No</Radio>
-                    <Radio value='No Tiene'>No tiene</Radio>
+                    <Radio value='Does Not Have'>Does Not Have</Radio>
                   </RadioGroup>
                 </CardBody>
               </Card>
 
               <Card className='w-full p-4'>
                 <CardHeader>
-                  <h2 className='text-po'>¿Mouse O Panel Táctil En Buen Estado?</h2>
+                  <h2 className='text-po'>Is the Mouse/Touchpad in Good Condition?</h2>
                 </CardHeader>
                 <CardBody>
                   <RadioGroup
@@ -718,16 +727,16 @@ export default function HomeTech(): JSX.Element | null {
                     value={formData.estadoMouse}
                     onValueChange={(val) => handleInputChange('estadoMouse', val)}
                   >
-                    <Radio value='Si'>Si</Radio>
+                    <Radio value='Yes'>Yes</Radio>
                     <Radio value='No'>No</Radio>
-                    <Radio value='No Tiene'>No tiene</Radio>
+                    <Radio value='Does Not Have'>Does Not Have</Radio>
                   </RadioGroup>
                 </CardBody>
               </Card>
 
               <Card className='w-full p-4'>
                 <CardHeader>
-                  <h2 className='text-po'>¿Unidad DVD En Buen Estado?</h2>
+                  <h2 className='text-po'>Is the DVD Drive in Good Condition?</h2>
                 </CardHeader>
                 <CardBody>
                   <RadioGroup
@@ -735,16 +744,16 @@ export default function HomeTech(): JSX.Element | null {
                     value={formData.estadoDVD}
                     onValueChange={(val) => handleInputChange('estadoDVD', val)}
                   >
-                    <Radio value='Si'>Si</Radio>
+                    <Radio value='Yes'>Yes</Radio>
                     <Radio value='No'>No</Radio>
-                    <Radio value='No Tiene'>No tiene</Radio>
+                    <Radio value='Does Not Have'>Does Not Have</Radio>
                   </RadioGroup>
                 </CardBody>
               </Card>
 
               <Card className='w-full p-4'>
                 <CardHeader>
-                  <h2 className='text-po'>¿Carcasa O Torre En Buen Estado?</h2>
+                  <h2 className='text-po'>Is the Case/Tower in Good Condition?</h2>
                 </CardHeader>
                 <CardBody>
                   <RadioGroup
@@ -752,16 +761,16 @@ export default function HomeTech(): JSX.Element | null {
                     value={formData.estadoCarcasa}
                     onValueChange={(val) => handleInputChange('estadoCarcasa', val)}
                   >
-                    <Radio value='Si'>Si</Radio>
+                    <Radio value='Yes'>Yes</Radio>
                     <Radio value='No'>No</Radio>
-                    <Radio value='No Tiene'>No tiene</Radio>
+                    <Radio value='Does Not Have'>Does Not Have</Radio>
                   </RadioGroup>
                 </CardBody>
               </Card>
 
               <Card className='w-full p-4'>
                 <CardHeader>
-                  <h2 className='text-po'>¿Funciona Correctamente?</h2>
+                  <h2 className='text-po'>Does it Work Properly?</h2>
                 </CardHeader>
                 <CardBody>
                   <RadioGroup
@@ -769,30 +778,32 @@ export default function HomeTech(): JSX.Element | null {
                     value={formData.funcionaCorrectamente}
                     onValueChange={(val) => handleInputChange('funcionaCorrectamente', val)}
                   >
-                    <Radio value='Si'>Si</Radio>
+                    <Radio value='Yes'>Yes</Radio>
                     <Radio value='No'>No</Radio>
                   </RadioGroup>
                 </CardBody>
               </Card>
 
               <Input
-                label='Sistema Operativo SO'
+                label='Operating System (OS)'
                 className='text-po w-full'
                 type='text'
                 color='secondary'
                 variant='underlined'
                 value={formData.sistemaOperativo}
                 onChange={(e) => handleInputChange('sistemaOperativo', e.target.value)}
+                translate='no'
               />
 
               <Input
-                label='Marca De La Computadora'
+                label='Computer Brand'
                 className='text-po w-full'
                 type='text'
                 color='secondary'
                 variant='underlined'
                 value={formData.marcaComputadora}
                 onChange={(e) => handleInputChange('marcaComputadora', e.target.value)}
+                translate='no'
               />
             </div>
 
@@ -800,7 +811,7 @@ export default function HomeTech(): JSX.Element | null {
 
             <div>
               <h2 className='text-center text-po font-bold my-10'>
-                Cargue Almenos 4 Imagenes Del Estado Actual De La Computadora Desde Diferentes Vistas
+                Upload at Least 4 Images of the Current State of the Computer from Different Views
               </h2>
             </div>
 
@@ -817,15 +828,16 @@ export default function HomeTech(): JSX.Element | null {
             <Divider className='my-10' />
 
             <div className='w-full flex flex-col gap-5'>
-              <h2 className='text-center text-po font-bold'>Describa El Estado General De La Computadora Con Observaciones</h2>
+              <h2 className='text-center text-po font-bold'>Describe the General Condition of the Computer with Observations</h2>
               <Textarea
-                label='Escriba La Descripción'
+                label='Write the Description'
                 variant='underlined'
                 color='secondary'
                 disableAutosize
                 className='w-full text-po bg-purple-100 rounded-t-xl p-1'
                 value={formData.observaciones}
                 onChange={(e) => handleInputChange('observaciones', e.target.value)}
+                translate='no'
               />
             </div>
           </ModalBody>
@@ -839,14 +851,14 @@ export default function HomeTech(): JSX.Element | null {
               className='text-po w-full md:w-96 rounded-xl'
               onPress={handleSave}
               isLoading={loading}
+              translate='no'
             >
-              Guardar Información
+              Save Information
             </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
 
-      {/* Modal para ver/actualizar servicio seleccionado */}
       <Modal
         isOpen={!!selectedService}
         onOpenChange={(open: boolean) => {
@@ -857,7 +869,7 @@ export default function HomeTech(): JSX.Element | null {
       >
         <ModalContent>
           <ModalHeader className='flex justify-center items-center'>
-            <h1 className='text-center text-4xl font-extrabold text-po'>INFORMACIÓN DEL SERVICIO</h1>
+            <h1 className='text-center text-4xl font-extrabold text-po'>SERVICE INFORMATION</h1>
           </ModalHeader>
 
           <ModalBody className='text-po'>
@@ -865,18 +877,18 @@ export default function HomeTech(): JSX.Element | null {
               <div className='space-y-6'>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                   <div>
-                    <h2 className='font-bold text-center mb-4'>INFORMACIÓN DEL CLIENTE</h2>
+                    <h2 className='font-bold text-center mb-4'>CUSTOMER INFORMATION</h2>
                     <p>
-                      <b className='font-bold'>Cliente:</b> {selectedService.nombreCliente}
+                      <b className='font-bold'>Customer:</b> {selectedService.nombreCliente}
                     </p>
                     <p>
-                      <b className='font-bold'>Dirección:</b> {selectedService.direccionCliente}
+                      <b className='font-bold'>Address:</b> {selectedService.direccionCliente}
                     </p>
                     <p>
-                      <b className='font-bold'>Cédula:</b> {selectedService.cedulaCliente}
+                      <b className='font-bold'>ID:</b> {selectedService.cedulaCliente}
                     </p>
                     <p>
-                      <b className='font-bold'>Celular:</b> {selectedService.celularCliente}
+                      <b className='font-bold'>Phone:</b> {selectedService.celularCliente}
                     </p>
                     <p>
                       <b className='font-bold'>Email:</b> {selectedService.emailCliente}
@@ -884,18 +896,18 @@ export default function HomeTech(): JSX.Element | null {
                   </div>
 
                   <div>
-                    <h2 className='font-bold text-center mb-4'>INFORMACIÓN DEL TÉCNICO</h2>
+                    <h2 className='font-bold text-center mb-4'>TECHNICIAN INFORMATION</h2>
                     <p>
-                      <b className='font-bold'>Técnico:</b> {selectedService.nombreTecnico}
+                      <b className='font-bold'>Technician:</b> {selectedService.nombreTecnico}
                     </p>
                     <p>
-                      <b className='font-bold'>Dirección:</b> {selectedService.direccionTecnico}
+                      <b className='font-bold'>Address:</b> {selectedService.direccionTecnico}
                     </p>
                     <p>
-                      <b className='font-bold'>Cédula:</b> {selectedService.cedulaTecnico}
+                      <b className='font-bold'>ID:</b> {selectedService.cedulaTecnico}
                     </p>
                     <p>
-                      <b className='font-bold'>Celular:</b> {selectedService.celularTecnico}
+                      <b className='font-bold'>Phone:</b> {selectedService.celularTecnico}
                     </p>
                     <p>
                       <b className='font-bold'>Email:</b> {selectedService.emailTecnico}
@@ -905,52 +917,52 @@ export default function HomeTech(): JSX.Element | null {
 
                 <Divider />
 
-                <h2 className='font-bold text-center'>ESTADO DE LA COMPUTADORA</h2>
+                <h2 className='font-bold text-center'>COMPUTER CONDITION</h2>
 
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                   <p>
-                    <b className='font-bold'>Sistema Operativo:</b> {selectedService.sistemaOperativo}
+                    <b className='font-bold'>Operating System:</b> {selectedService.sistemaOperativo}
                   </p>
                   <p>
-                    <b className='font-bold'>Marca:</b> {selectedService.marcaComputadora}
+                    <b className='font-bold'>Brand:</b> {selectedService.marcaComputadora}
                   </p>
                   <p>
-                    <b className='font-bold'>Tipo De Computadora:</b> {selectedService.tipoComputadora}
+                    <b className='font-bold'>Type of Computer:</b> {selectedService.tipoComputadora}
                   </p>
                   <p>
-                    <b className='font-bold'>Tipo De Mantenimiento:</b> {selectedService.tipoMantenimiento}
+                    <b className='font-bold'>Type of Maintenance:</b> {selectedService.tipoMantenimiento}
                   </p>
                   <p>
-                    <b className='font-bold'>Teclado En Buen Estado:</b> {selectedService.estadoTeclado}
+                    <b className='font-bold'>Keyboard in Good Condition:</b> {selectedService.estadoTeclado}
                   </p>
                   <p>
-                    <b className='font-bold'>Pantalla En Buen Estado:</b> {selectedService.estadoPantalla}
+                    <b className='font-bold'>Screen in Good Condition:</b> {selectedService.estadoPantalla}
                   </p>
                   <p>
-                    <b className='font-bold'>Mouse O Touchpad En Buen Estado:</b> {selectedService.estadoMouse}
+                    <b className='font-bold'>Mouse/Touchpad in Good Condition:</b> {selectedService.estadoMouse}
                   </p>
                   <p>
-                    <b className='font-bold'>DVD En Buen Estado:</b> {selectedService.estadoDVD}
+                    <b className='font-bold'>DVD in Good Condition:</b> {selectedService.estadoDVD}
                   </p>
                   <p>
-                    <b className='font-bold'>Carcasa En Buen Estado:</b> {selectedService.estadoCarcasa}
+                    <b className='font-bold'>Case in Good Condition:</b> {selectedService.estadoCarcasa}
                   </p>
                   <p>
-                    <b className='font-bold'>Funciona Correctamente:</b> {selectedService.funcionaCorrectamente}
+                    <b className='font-bold'>Works Properly:</b> {selectedService.funcionaCorrectamente}
                   </p>
                 </div>
 
                 <Divider />
 
                 <div>
-                  <h2 className='font-bold'>Observaciones:</h2>
+                  <h2 className='font-bold'>Observations:</h2>
                   <p className='bg-gray-100 p-4 rounded-lg'>{selectedService.observaciones}</p>
                 </div>
 
                 <Divider />
 
                 <div>
-                  <h2 className='font-bold text-center mb-4'>PROGRESO DEL MANTENIMIENTO</h2>
+                  <h2 className='font-bold text-center mb-4'>MAINTENANCE PROGRESS</h2>
 
                   <Progress value={getCurrentProgress(selectedService)} className='max-w-full mb-6' />
 
@@ -974,8 +986,8 @@ export default function HomeTech(): JSX.Element | null {
                                 <p className='text-sm text-gray-600'>{statusInfo.description}</p>
                                 {state && (
                                   <p className='text-xs text-gray-500 mt-1'>
-                                    Actualizado: {formatTimestamp(state.updatedAt)}
-                                    {state.notes && ` - Notas: ${state.notes}`}
+                                    Updated: {formatTimestamp(state.updatedAt)}
+                                    {state.notes && ` - Notes: ${state.notes}`}
                                   </p>
                                 )}
                               </div>
@@ -991,17 +1003,19 @@ export default function HomeTech(): JSX.Element | null {
 
                   {selectedService.currentStatus !== 'completed' && (
                     <div className='mt-6 p-4 bg-default-100 rounded-lg'>
-                      <h3 className='font-bold mb-3'>Actualizar estado de mantenimiento</h3>
+                      <h3 className='font-bold mb-3'>Update Maintenance Status</h3>
                       <Textarea
-                        label='Notas del estado actual'
-                        placeholder='Describe lo que se ha realizado...'
+                        label='Current Status Notes'
+                        placeholder='Describe what has been done...'
                         value={statusNotes}
                         onChange={(e) => setStatusNotes(e.target.value)}
+                        translate='no'
                         className='mb-3'
                       />
                       <div className='flex justify-end'>
                         <Button
                           color='primary'
+                          translate='no'
                           onPress={() => {
                             const nextStatus = getNextStatus(selectedService.currentStatus as MaintenanceStatus);
                             if (nextStatus) {
@@ -1010,7 +1024,8 @@ export default function HomeTech(): JSX.Element | null {
                           }}
                           isLoading={updatingStatus === `${selectedService.id}-${getNextStatus(selectedService.currentStatus as MaintenanceStatus)}`}
                         >
-                          {selectedService.currentStatus === 'pending' ? 'Iniciar Mantenimiento' : 'Avanzar al Siguiente Estado'}
+                          {selectedService.currentStatus === 'pending' ? 'Start Maintenance' : 'Move to Next Status'}
+
                         </Button>
                       </div>
                     </div>
@@ -1020,9 +1035,9 @@ export default function HomeTech(): JSX.Element | null {
                 <Divider />
 
                 <div>
-                  <h2 className='font-bold text-center mb-4'>FECHA DE CREACIÓN</h2>
+                  <h2 className='font-bold text-center mb-4'>CREATION DATE</h2>
                   <p className='text-center'>{formatTimestamp(selectedService.createdAt)}</p>
-                  <p className='text-center'>{`Código de seguimiento: ${selectedService.trackingCode}`}</p> 
+                  <p className='text-center'>{`Tracking Code: ${selectedService.trackingCode}`}</p>
                 </div>
               </div>
             )}
@@ -1032,21 +1047,23 @@ export default function HomeTech(): JSX.Element | null {
             <Button
               color='danger'
               variant='flat'
+              translate='no'
               onPress={() => selectedService && handleDeleteService(selectedService.id!)}
               isLoading={deletingId === selectedService?.id}
             >
-              CANCELAR MANTENIMIENTO
+              CANCEL MAINTENANCE
             </Button>
 
             {selectedService?.currentStatus === 'pending' && (
               <Button
                 className='text-po text-white'
+                translate='no'
                 color='success'
                 variant='shadow'
                 onPress={() => selectedService && handleStartMaintenance(selectedService.id!)}
                 isLoading={updatingStatus === selectedService?.id}
               >
-                INICIAR MANTENIMIENTO
+                START MAINTENANCE
               </Button>
             )}
           </ModalFooter>
