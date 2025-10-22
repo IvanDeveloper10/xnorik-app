@@ -1,65 +1,105 @@
-'use client'
+'use client';
 
 import { Fragment, useState } from 'react';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { Button } from '@heroui/button';
 import { Input } from '@heroui/input';
-import { Button } from '@heroui/button'; 
-import { useRouter } from 'next/navigation';
-import { app } from '@/utils/firebase';
+import { Spinner } from '@heroui/spinner';
 import Image from 'next/image';
 import Link from 'next/link';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/utils/firebase';
+import { addToast } from '@heroui/toast';
 
-
-
-export default function Register(): JSX.Element {
-
+export default function ClientRegister(): JSX.Element {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const auth = getAuth(app);
-  const router = useRouter();
-
   const handleRegister = async () => {
-    setError(null);
-    setLoading(true);
+    if (!email || !password) {
+      alert('Por favor, complete todos los campos');
+      return;
+    }
 
     try {
-      const cleanEmail = email.trim().toLowerCase();
-      const cleanPassword = password.trim();
-
-      await createUserWithEmailAndPassword(auth, cleanEmail, cleanPassword);
-      router.push('/Login');
-    } catch (err: any) {
-      setError(err.message);
+      setLoading(true);
+      await createUserWithEmailAndPassword(auth, email, password);
+      window.location.href = '/User';
+    } catch (error: any) {
+      alert(`Error al registrar: ${error.message}`);
     } finally {
       setLoading(false);
     }
-  }
-
+  };
 
   return (
     <Fragment>
-      <section className='w-full flex justify-evenly items-center text-po'>
-        <main className='w-96 flex flex-col gap-5'>
-          <h1 className='font-bold text-center text-xl'>INFORMACION DE USUARIO</h1>
-          <label translate='no'>
-            <Input label='Email' translate='no' autoComplete='off' color='default' variant='underlined' type='email' value={email} onChange={(e) => setEmail(e.target.value)}></Input>
-          </label>
-          <label translate='no'>
-            <Input label='Password' translate='no' autoComplete='off' color='default' variant='underlined' type='password' value={password} onChange={(e) => setPassword(e.target.value)}></Input>
-          </label>
-          {error && <p className='text-red-500 text-sm text-center text-po'>{error}</p>}
-          <div>
-            <Button color='secondary' translate='no' radius='none' variant='shadow' className='w-full' onPress={handleRegister} isLoading={loading}>REGISTER</Button>
+      <section className='w-full flex justify-around flex-wrap pt-10'>
+        <div className='w-2/5'>
+          <h1 className='font-extrabold text-2xl text-po text-center my-3'>
+            CREAR NUEVA CUENTA
+          </h1>
+
+          <div className='flex flex-col justify-center items-center gap-4 text-po'>
+            <Input
+              placeholder='Correo Electrónico'
+              variant='underlined'
+              color='secondary'
+              onChange={(e) => setEmail(e.target.value)}
+              isDisabled={loading}
+            />
+
+            <Input
+              placeholder='Contraseña'
+              variant='underlined'
+              color='secondary'
+              type='password'
+              onChange={(e) => setPassword(e.target.value)}
+              isDisabled={loading}
+            />
+
+            <div className='w-full flex justify-around items-center gap-4 my-3'>
+              <Link href='/' className='w-full'>
+                <Button
+                  className='w-full flex justify-center items-center'
+                  variant='shadow'
+                  color='secondary'
+                  isDisabled={loading}
+                >
+                  <i className='fi fi-rr-arrow-left flex justify-center items-center'></i>{' '}
+                  ATRÁS
+                </Button>
+              </Link>
+
+              <Button
+                className='w-full flex justify-center items-center gap-2'
+                variant='shadow'
+                color='secondary'
+                onPress={handleRegister}
+                isDisabled={loading}
+              >
+                {loading ? (
+                  <>
+                    <Spinner size='sm' color='white' /> REGISTRANDO
+                  </>
+                ) : (
+                  'CREAR'
+                )}
+              </Button>
+            </div>
           </div>
-          <div>
-            <p className='text-sm text-center'>¿Ya Tienes Una Cuenta Registrada? <Link href='/Login' className='text-blue-500'>Inicia Sesion Aquí</Link></p>
+          <div className='flex justify-center items-center my-10'>
+            <span className='text-po'>¿Ya Tienes Una Cuenta? <Link href={'/Login'} className='text-blue-500'>Inicia Sesion Aqui</Link></span>
           </div>
-        </main>
+        </div>
+
         <div>
-          <Image src={'/image-register.svg'} alt={''} width={350} height={350}></Image>
+          <Image
+            src={'/image-profile.svg'}
+            alt={'Image Profile'}
+            width={400}
+            height={400}
+          />
         </div>
       </section>
     </Fragment>

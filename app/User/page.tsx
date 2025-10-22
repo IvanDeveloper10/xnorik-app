@@ -91,7 +91,6 @@ const MAINTENANCE_STATUSES: {
 
 export default function HomeTech(): JSX.Element | null {
   const [isOpen, setIsOpen] = useState(false);
-
   const [user, setUser] = useState<User | null>(null);
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [images, setImages] = useState<string[]>([]);
@@ -145,6 +144,7 @@ export default function HomeTech(): JSX.Element | null {
     return () => unsubscribe();
   }, [auth, router]);
 
+  // Suscripción en tiempo real a los servicios del usuario
   useEffect(() => {
     if (!user) return;
 
@@ -161,15 +161,24 @@ export default function HomeTech(): JSX.Element | null {
           id: docSnap.id,
           ...docSnap.data()
         })) as ServiceData[];
+
+        // Ordenar por fecha de creación
         serviciosData.sort((a, b) => {
-          if (a.createdAt && b.createdAt && a.createdAt.toDate && b.createdAt.toDate) {
-            return b.createdAt.toDate().getTime() - a.createdAt.toDate().getTime();
-          }
-          return 0;
+          const timeA = a.createdAt?.toDate?.()?.getTime() || 0;
+          const timeB = b.createdAt?.toDate?.()?.getTime() || 0;
+          return timeB - timeA;
         });
 
         setServices(serviciosData);
         setFirestoreError(null);
+
+        // Actualizar el servicio seleccionado si está abierto
+        if (selectedService) {
+          const updatedService = serviciosData.find(s => s.id === selectedService.id);
+          if (updatedService) {
+            setSelectedService(updatedService);
+          }
+        }
       },
       (error) => {
         console.error('Error en Firestore:', error);
@@ -184,24 +193,28 @@ export default function HomeTech(): JSX.Element | null {
     );
 
     return () => unsubscribe();
-  }, [user]);
+  }, [user, selectedService]);
+
   useEffect(() => {
     return () => {
       images.forEach((url) => {
         try {
           URL.revokeObjectURL(url);
         } catch (e) {
+          console.warn('Error revoking URL:', e);
         }
       });
     };
-  }, []);
+  }, [images]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
+      // Limpiar URLs anteriores
       images.forEach((url) => {
         try {
           URL.revokeObjectURL(url);
         } catch (err) {
+          console.warn('Error revoking URL:', err);
         }
       });
 
@@ -251,9 +264,10 @@ export default function HomeTech(): JSX.Element | null {
 
       addToast({
         title: `Código de seguimiento: ${trackingCode}`,
+        description: 'Este código ha sido generado automáticamente',
         variant: 'bordered',
         color: 'success',
-        timeout: 4000,
+        timeout: 5000,
       });
       setIsOpen(false);
       setFormData({
@@ -285,6 +299,7 @@ export default function HomeTech(): JSX.Element | null {
         try {
           URL.revokeObjectURL(url);
         } catch (err) {
+          console.warn('Error revoking URL:', err);
         }
       });
       setImages([]);
@@ -292,6 +307,7 @@ export default function HomeTech(): JSX.Element | null {
       console.error('Error guardando datos: ', error);
       addToast({
         title: 'Hubo un error al guardar los datos',
+        description: 'Por favor, intenta nuevamente',
         variant: 'bordered',
         color: 'danger'
       });
@@ -332,8 +348,8 @@ export default function HomeTech(): JSX.Element | null {
       const newStatus: MaintenanceStatus = 'diagnosis';
       const newState: MaintenanceState = {
         status: newStatus,
-        updatedAt: Timestamp.now(), 
-        notes: 'Mantenimiento iniciado'
+        updatedAt: Timestamp.now(),
+        notes: 'Mantenimiento iniciado - Diagnóstico en progreso'
       };
 
       const serviceRef = doc(db, 'servicios', serviceId);
@@ -349,19 +365,11 @@ export default function HomeTech(): JSX.Element | null {
         variant: 'bordered',
         color: 'success'
       });
-      setSelectedService((prev) =>
-        prev && prev.id === serviceId
-          ? {
-            ...prev,
-            currentStatus: newStatus,
-            maintenanceStates: [...(prev.maintenanceStates || []), newState]
-          }
-          : prev
-      );
     } catch (error) {
       console.error('Error iniciando mantenimiento: ', error);
       addToast({
         title: 'Error al iniciar mantenimiento',
+        description: 'Por favor, intenta nuevamente',
         variant: 'bordered',
         color: 'danger'
       });
@@ -377,7 +385,7 @@ export default function HomeTech(): JSX.Element | null {
     try {
       const newState: MaintenanceState = {
         status: newStatus,
-        updatedAt: Timestamp.now(), 
+        updatedAt: Timestamp.now(),
         notes: statusNotes || `Cambiado a ${MAINTENANCE_STATUSES.find((s) => s.key === newStatus)?.label}`
       };
 
@@ -393,21 +401,12 @@ export default function HomeTech(): JSX.Element | null {
         color: 'success'
       });
 
-      setSelectedService((prev) =>
-        prev && prev.id === serviceId
-          ? {
-            ...prev,
-            currentStatus: newStatus,
-            maintenanceStates: [...(prev.maintenanceStates || []), newState]
-          }
-          : prev
-      );
-
       setStatusNotes('');
     } catch (error) {
       console.error('Error actualizando estado: ', error);
       addToast({
         title: 'Error al actualizar estado',
+        description: 'Por favor, intenta nuevamente',
         variant: 'bordered',
         color: 'danger'
       });
@@ -430,19 +429,31 @@ export default function HomeTech(): JSX.Element | null {
   };
 
   const formatTimestamp = (value: any) => {
-    if (!value) return '';
+    if (!value) return 'No disponible';
     if (value.toDate && typeof value.toDate === 'function') {
       try {
-        return value.toDate().toLocaleString();
+        return value.toDate().toLocaleString('es-ES', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
       } catch (e) {
         return String(value);
       }
     }
     if (value instanceof Date) {
-      return value.toLocaleString();
+      return value.toLocaleString('es-ES');
     }
     try {
-      return new Date(value).toLocaleString();
+      return new Date(value).toLocaleString('es-ES', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
     } catch (e) {
       return String(value);
     }
@@ -458,20 +469,22 @@ export default function HomeTech(): JSX.Element | null {
 
   const canSave =
     Object.entries(formData)
-      .filter(([key]) => key !== 'trackingCode') 
+      .filter(([key]) => key !== 'trackingCode')
       .every(([_, val]) => val.toString().trim() !== '') &&
     images.length >= 4;
-
-  
 
   return (
     <Fragment>
       <section className='container mx-auto p-4'>
         <main>
-          <h1 className='text-5xl text-center my-10 font-extrabold text-po max-sm:text-2xl'><span className='bg-red-500 text-white p-2 rounded-xl max-md:bg-transparent max-md:text-black max-md:p-0 max-md:rounded-none'>BIENVENIDO</span> AL CENTRO DE <span className='bg-purple-500 text-white p-2 rounded-xl max-md:bg-transparent max-md:text-black max-md:p-0 max-md:rounded-none'>CONTROL</span></h1>
-          <div className='flex justify-around items-center'>
-            <Image src={'/image-board.svg'} width={500} />
-            <Image src={'/image-presentation.svg'} width={500} />
+          <h1 className='text-5xl text-center my-10 font-extrabold text-po max-sm:text-2xl'>
+            <span className='bg-red-500 text-white p-2 rounded-xl max-md:bg-transparent max-md:text-black max-md:p-0 max-md:rounded-none'>BIENVENIDO</span>
+            AL CENTRO DE
+            <span className='bg-purple-500 text-white p-2 rounded-xl max-md:bg-transparent max-md:text-black max-md:p-0 max-md:rounded-none'>CONTROL</span>
+          </h1>
+          <div className='flex justify-around items-center max-md:flex-col'>
+            <Image src={'/image-board.svg'} width={500} height={300} alt="Dashboard illustration" />
+            <Image src={'/image-presentation.svg'} width={500} height={300} alt="Presentation illustration" />
           </div>
         </main>
         <Divider />
@@ -480,7 +493,6 @@ export default function HomeTech(): JSX.Element | null {
           <div className='bg-danger-100 border border-danger-400 text-danger-700 px-4 py-3 rounded relative mb-4'>
             <strong className='font-bold'>Error de Firebase: </strong>
             <span className='block sm:inline'>{firestoreError}</span>
-            <br />
           </div>
         )}
 
@@ -498,7 +510,7 @@ export default function HomeTech(): JSX.Element | null {
           {services.map((service) => (
             <div key={service.id} className='relative'>
               <Card
-                className='w-full h-48 flex flex-col justify-between cursor-pointer'
+                className='w-full h-48 flex flex-col justify-between cursor-pointer hover:shadow-lg transition-shadow'
                 isPressable
                 onPress={() => setSelectedService(service)}
               >
@@ -519,11 +531,7 @@ export default function HomeTech(): JSX.Element | null {
                     </p>
                   </div>
                   <p className='text-xs text-gray-500 mt-2'>
-                    {service.createdAt && service.createdAt.toDate
-                      ? service.createdAt.toDate().toLocaleDateString()
-                      : service.createdAt
-                        ? formatTimestamp(service.createdAt)
-                        : ''}
+                    {service.createdAt ? formatTimestamp(service.createdAt) : 'No disponible'}
                   </p>
                 </CardBody>
               </Card>
@@ -544,8 +552,7 @@ export default function HomeTech(): JSX.Element | null {
         </div>
       </section>
 
-      {/* Modal para agregar servicio */}
-      <Modal isOpen={isOpen} onOpenChange={(open: boolean) => setIsOpen(open)} size='full' scrollBehavior='inside'>
+      <Modal isOpen={isOpen} onOpenChange={setIsOpen} size='full' scrollBehavior='inside'>
         <ModalContent>
           <ModalHeader className='flex justify-center items-center'>
             <h1 className='text-center text-4xl font-extrabold text-po'>INFORMACIÓN DEL MANTENIMIENTO</h1>
@@ -557,7 +564,6 @@ export default function HomeTech(): JSX.Element | null {
                 <Input
                   label='Nombres Y Apellidos Del Cliente'
                   color='secondary'
-                  variant='underlined'
                   type='text'
                   value={formData.nombreCliente}
                   onChange={(e) => handleInputChange('nombreCliente', e.target.value)}
@@ -565,7 +571,6 @@ export default function HomeTech(): JSX.Element | null {
                 <Input
                   label='Dirección De Residencia'
                   color='secondary'
-                  variant='underlined'
                   type='text'
                   value={formData.direccionCliente}
                   onChange={(e) => handleInputChange('direccionCliente', e.target.value)}
@@ -573,21 +578,18 @@ export default function HomeTech(): JSX.Element | null {
                 <Input
                   label='Número De Cedula'
                   color='secondary'
-                  variant='underlined'
                   value={formData.cedulaCliente}
                   onChange={(e) => handleInputChange('cedulaCliente', e.target.value)}
                 />
                 <Input
                   label='Número De Celular'
                   color='secondary'
-                  variant='underlined'
                   value={formData.celularCliente}
                   onChange={(e) => handleInputChange('celularCliente', e.target.value)}
                 />
                 <Input
                   label='Email O Correo Electronico'
                   color='secondary'
-                  variant='underlined'
                   type='email'
                   value={formData.emailCliente}
                   onChange={(e) => handleInputChange('emailCliente', e.target.value)}
@@ -598,14 +600,12 @@ export default function HomeTech(): JSX.Element | null {
                 <Input
                   label='Nombres Y Apellidos Del Técnico'
                   color='secondary'
-                  variant='underlined'
                   value={formData.nombreTecnico}
                   onChange={(e) => handleInputChange('nombreTecnico', e.target.value)}
                 />
                 <Input
                   label='Dirección De Residencia'
                   color='secondary'
-                  variant='underlined'
                   type='text'
                   value={formData.direccionTecnico}
                   onChange={(e) => handleInputChange('direccionTecnico', e.target.value)}
@@ -613,21 +613,18 @@ export default function HomeTech(): JSX.Element | null {
                 <Input
                   label='Número De Cedula'
                   color='secondary'
-                  variant='underlined'
                   value={formData.cedulaTecnico}
                   onChange={(e) => handleInputChange('cedulaTecnico', e.target.value)}
                 />
                 <Input
                   label='Número De Celular'
                   color='secondary'
-                  variant='underlined'
                   value={formData.celularTecnico}
                   onChange={(e) => handleInputChange('celularTecnico', e.target.value)}
                 />
                 <Input
                   label='Email O Correo Electronico'
                   color='secondary'
-                  variant='underlined'
                   type='email'
                   value={formData.emailTecnico}
                   onChange={(e) => handleInputChange('emailTecnico', e.target.value)}
@@ -780,7 +777,6 @@ export default function HomeTech(): JSX.Element | null {
                 className='text-po w-full'
                 type='text'
                 color='secondary'
-                variant='underlined'
                 value={formData.sistemaOperativo}
                 onChange={(e) => handleInputChange('sistemaOperativo', e.target.value)}
               />
@@ -790,7 +786,6 @@ export default function HomeTech(): JSX.Element | null {
                 className='text-po w-full'
                 type='text'
                 color='secondary'
-                variant='underlined'
                 value={formData.marcaComputadora}
                 onChange={(e) => handleInputChange('marcaComputadora', e.target.value)}
               />
@@ -820,7 +815,6 @@ export default function HomeTech(): JSX.Element | null {
               <h2 className='text-center text-po font-bold'>Describa El Estado General De La Computadora Con Observaciones</h2>
               <Textarea
                 label='Escriba La Descripción'
-                variant='underlined'
                 color='secondary'
                 disableAutosize
                 className='w-full text-po bg-purple-100 rounded-t-xl p-1'
@@ -846,7 +840,6 @@ export default function HomeTech(): JSX.Element | null {
         </ModalContent>
       </Modal>
 
-      {/* Modal para ver/actualizar servicio seleccionado */}
       <Modal
         isOpen={!!selectedService}
         onOpenChange={(open: boolean) => {
@@ -1020,9 +1013,9 @@ export default function HomeTech(): JSX.Element | null {
                 <Divider />
 
                 <div>
-                  <h2 className='font-bold text-center mb-4'>FECHA DE CREACIÓN</h2>
-                  <p className='text-center'>{formatTimestamp(selectedService.createdAt)}</p>
-                  <p className='text-center'>{`Código de seguimiento: ${selectedService.trackingCode}`}</p> 
+                  <h2 className='font-bold text-center mb-4'>INFORMACIÓN DEL SERVICIO</h2>
+                  <p className='text-center'><b>Fecha de creación:</b> {formatTimestamp(selectedService.createdAt)}</p>
+                  <p className='text-center'><b>Código de seguimiento:</b> {selectedService.trackingCode}</p>
                 </div>
               </div>
             )}
