@@ -1,0 +1,15 @@
+[33m5afba3e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{0}: rebase (abort): returning to refs/heads/main
+[33m1414afb[m HEAD@{1}: commit: first commit
+[33mfeedc5e[m HEAD@{2}: pull origin main --rebase (start): checkout feedc5e346f25784d172f06110a72b5789d20bba
+[33m5afba3e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{3}: commit (merge): first commit
+[33md9a325c[m HEAD@{4}: commit: first commit
+[33mf46cbc3[m HEAD@{5}: commit: first commit
+[33m809b03b[m HEAD@{6}: commit: first commit
+[33md4df406[m HEAD@{7}: commit: first commit
+[33m0cf4732[m HEAD@{8}: pull origin main --rebase (finish): returning to refs/heads/main
+[33m0cf4732[m HEAD@{9}: pull origin main --rebase (pick): first commit
+[33m4c1bc27[m HEAD@{10}: pull origin main --rebase (start): checkout 4c1bc27517be9bb8926d2bf2a4c2b2712994d220
+[33m471c7ed[m HEAD@{11}: commit: first commit
+[33m1b70e23[m HEAD@{12}: commit: first commit
+[33me87e2d6[m HEAD@{13}: Branch: renamed refs/heads/master to refs/heads/main
+[33me87e2d6[m HEAD@{15}: commit (initial): first commit
