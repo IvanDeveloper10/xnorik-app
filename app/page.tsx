@@ -415,7 +415,7 @@ export default function HomePage(): JSX.Element {
       <Image src={'/image-shape-three.jpg'} className='absolute top-0 right-0' alt={''} width={200} height={200} />
       <section className='h-screen rounded-xl w-full flex flex-col p-10 max-md:p-5'>
         <main className='mt-10 max-md:mt-0 flex flex-col justify-center items-center gap-10 text-po max-md:w-full'>
-          <h1 className='font-extrabold text-6xl text-po text-center text-shadow text-shadow-sm text-shadow-black max-md:text-5xl max-sm:text-xl'>VISUALIZE EL ESTADO DE SU COMPUTADORA</h1>
+          <h1 className='font-extrabold text-6xl text-po text-center text-shadow text-shadow-sm text-shadow-black max-md:text-5xl max-sm:text-xl'>VISUALICE EL ESTADO DE SU COMPUTADORA</h1>
           <label className='flex max-md:w-full gap-2'>
             <Input
               label={'Ingrese El Ticket O Codigo'}
